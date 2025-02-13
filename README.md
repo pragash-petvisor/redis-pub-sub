@@ -1,15 +1,14 @@
 ### Setup redis in docker
-
->>> docker pull redis:latest
->>> docker run -d -p 6379:6379 redis
+ docker pull redis:latest
+ docker run -d -p 6379:6379 redis
 
 ### Run main task
 
->>> php main-task.php
+ php main-task.php
 
 ### Run sub task
 
->>> php sub-task.php ANY_RANDOM_NUMBER
+ php sub-task.php ANY_RANDOM_NUMBER
 
 ### Does application reconnect if redis is down
 
