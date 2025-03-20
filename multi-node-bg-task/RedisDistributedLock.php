@@ -91,12 +91,28 @@ class RedisDistributedLock
             return false;
         }
 
-        return (bool) $this->redis->eval($this->lockExtensionScript, [$this->lockKey, $this->lockValue, $this->ttl], 1);
+        $result = $this->redis->eval($this->lockExtensionScript, [$this->lockKey, $this->lockValue, $this->ttl], 1);
+
+        if ($result == 1) {
+            echo "Lock extended successfully.\n";
+            return true;
+        } else {
+            echo "Lock extension failed.\n";
+            return false;
+        }  
     }
 
     public function release(): bool
     {
-        return (bool) $this->redis->eval($this->lockReleaseScript, [$this->lockKey, $this->lockValue], 1);
+        $result = $this->redis->eval($this->lockReleaseScript, [$this->lockKey, $this->lockValue], 1);
+
+        if ($result == 1) {
+            echo "Lock released successfully.\n";
+            return true;
+        } else {
+            echo "Lock owned by another process.\n";
+            return false;
+        }        
     }
 
     public function isHeld(): bool
