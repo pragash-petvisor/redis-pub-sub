@@ -29,4 +29,7 @@ $alertCallback = function ($message) {
 };
 
 $subscriber = new RedisSubscriber('pms_check_channel', $alertCallback);
-$subscriber->subscribe();
+$subscriber->subscribeWithTimeout(300, function() {
+    echo "Timeout reached";
+});
+// $subscriber->subscribe();
